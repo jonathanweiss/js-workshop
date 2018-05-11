@@ -251,3 +251,68 @@ const [
   makeCoffee(),
 );
 ```
+
+### Use plain objects
+
+It's ok create and pass around plain objects. Only use generator functions when you have some logic in them.
+
+Instead of
+```javascript
+function generateUserObject(firstName, lastName, age, id, accountType) {
+  return {
+    firstName: firstName,
+    lastName: lastName,
+    age: age,
+    id: id,
+    accountType: accountType,
+  };
+}
+
+var myUser = generateUserObject(data.firstName, data.lastName, data.age, userInfo.id, userInfo.accountType);
+validateUser(myUser);
+```
+
+use a plain object
+
+```javascript
+validateUser({
+  firstName: data.firstName,
+  lastName: data.lastName,
+  age: data.age,
+  id: userInfo.id,
+  accountType: userInfo.accountType,
+});
+```
+### Be careful with `falsy` values
+
+```javascript
+const getInsuranceType = patientId => 'premium';
+
+const generatePatientInfo = ({ firstName, id, dateOfBirth }) => (
+  firstName,
+  insuranceType: getInsuranceType(id),
+  age: moment().year() - moment(dateOfBirth).year(),
+);
+
+const validatePatient = patient => (
+  patient.firstName &&
+  patient.insuranceType &&
+  patient.age
+);
+const hans = generateUserObject('Hans', 1337, moment('2018-02-01'));
+
+validatePatient(hans); // => 0
+// "Hans" && "premium" && 0 => 0 => "falsy"
+```
+
+Better use `in`:
+
+```javascript
+const validatePatient = patient => (
+  patient.firstName.trim() !== '' &&
+  patient.insuranceType.trim() !== '' &&
+  'age' in patient
+);
+
+validatePatient(hans); // => true
+```
