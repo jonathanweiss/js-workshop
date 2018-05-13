@@ -1,6 +1,31 @@
+# JavaScript Workshop
+
+**Watch on your screen: https://tinyurl.com/dg-js2018**
+
+## React
+
+#### Cloning data with spread
+
+```javascript
+const simpsonsDuplicate = [...simpsonsCharacters];
+const homerClone = {...simpsonsCharacters[0]};
+```
+
+#### Cloning data while updating parts of it
+
+```javascript
+const homer2018 = {
+  ...simpsonsCharacters[0],
+  age: 40,
+};
+
+const fewNumbers = [0, 1, 2, 3];
+const moreNumbers = [...fewNumbers, 4, 5, 6];
+```
+
 ### Never manipulate the state directly
 
-Be careful impure functions like `Array.push()`.
+Be careful with impure functions like `Array.push()`.
 
 ```javascript
 class PatientList extends React.Component {
@@ -44,7 +69,7 @@ class PatientList extends React.Component {
 }
 ```
 
-`patient` is a *reference* to `this.state.patient`, _not_ a copy! Using `push()` will directly modify the state.
+`patients` is a *reference* to `this.state.patients`, _not_ a copy! Using `push()` will directly modify the state.
 
 ```javascript
 class PatientList extends React.Component {
@@ -106,8 +131,8 @@ Instead of using objects or arrays...
   characterObject={{
     firstName: 'Homer',
     lastName: 'Simpson',
-    age: 39,
     gender: 'male',
+    age: 39,
   }}
 />
 ```
@@ -117,8 +142,8 @@ try to use a single prop for a single value.
 <Character
   firstName="Homer"
   lastName="Simpson"
-  age={39}
   gender="male"
+  age={39}
 />
 ```
 
@@ -151,7 +176,7 @@ Instead of
         gender: 'male',
         age: 40,
       },
-    ]
+    ],
   }
 />
 ```
@@ -163,8 +188,20 @@ re-use components
   <Character
     firstName="Homer"
     lastName="Simpson"
-    age={39}
     gender="male"
+    age={39}
+  />
+  <Character
+    firstName="Selma"
+    lastName="Bouvier"
+    gender="female"
+    age={41}
+  />
+  <Character
+    firstName="Barney"
+    lastName="Gumble"
+    gender="male"
+    age={40}
   />
 </CharacterList>
 ```

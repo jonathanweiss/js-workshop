@@ -4,9 +4,8 @@
 
 ## ES6 / ES2015
 
-### Mapping data
-
 Demo data used for all examples:
+
 ```
 var simpsonsCharacters = [
   {
@@ -29,6 +28,8 @@ var simpsonsCharacters = [
   },
 ];
 ```
+
+### Mapping data
 
 Instead of this
 
@@ -64,8 +65,13 @@ Why should we do this?
 
  - Less code
  - Easier to read
+
+
+
+Good to know:
+
  - `map()` returns a new array
- - `map()` can be chained with other functions
+ - therefore `map()` can be chained with other functions
 
 
 ### Finding data
@@ -81,7 +87,6 @@ function containsHomer(characters) {
       homerFound = true;
     }
   }
-
 
   return homerFound;
 }
@@ -102,26 +107,6 @@ const containsHomer = (characters) => {
   return characters.findIndex(character => character.firstName === 'Homer') !== -1;
 };
 ```
-
-
-### Cloning data with spread
-```javascript
-const simpsonsDuplicate = [...simpsonsCharacters];
-const homerClone = {...simpsonsCharacters[0]};
-```
-
-### Cloning data while updating parts of it
-```javascript
-const homer2018 = {
-  ...simpsonsCharacters[0],
-  age: 40,
-};
-
-const fewNumbers = [0, 1, 2, 3];
-const moreNumbers = [...fewNumbers, 4, 5, 6];
-```
-
-We'll need this for React later.
 
 ### Optional parameters
 
