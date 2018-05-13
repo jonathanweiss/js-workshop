@@ -110,7 +110,7 @@ const simpsonsDuplicate = [...simpsonsCharacters];
 const homerClone = {...simpsonsCharacters[0]};
 ```
 
-### Cloning data and updating parts of it while doing so
+### Cloning data while updating parts of it
 ```javascript
 const homer2018 = {
   ...simpsonsCharacters[0],
@@ -316,3 +316,115 @@ const validatePatient = patient => (
 
 validatePatient(hans); // => true
 ```
+
+## Functional Programming
+
+### Prefer pure functions 1
+
+Avoid side-effects in functions
+```javascript
+class PatientList {
+  constructor() {
+    this.patients = [];
+  }
+
+  addPatient({ firstName, id, dateOfBirth }) {
+    this.patients.push({
+      firstName,
+      insuranceType: getInsuranceType(id),
+      age: moment().year() - moment(dateOfBirth).year(),
+    });
+  }
+}
+```
+
+`createPatient()` is free of side-effects
+```javascript
+export const createPatient = ({ firstName, id, dateOfBirth }) => {
+  return {
+    firstName,
+    insuranceType: getInsuranceType(id),
+    age: moment().year() - moment(dateOfBirth).year(),
+  }
+};
+
+class PatientList {
+  constructor() {
+    this.patients = [];
+  }
+
+  addPatient(patient) {
+    this.patients.push(createPatient(patient));
+  }
+}
+```
+Pros
+ - Easier to understand
+ - Easier to test
+ - Function is re-usable 
+ - Bonus: we've removed the dependencies (`moment()` and `getInsuranceType()`) from `PatientList`.
+
+### Prefer pure functions 2
+
+Avoid relying on state (or other class members)
+
+```javascript
+class CharacterSelector extends React.Component {
+  displayCharacters() {
+    return this.props.characters.map(character => {
+      return (
+        <Character
+          firstName={character.firstName}
+          lastName={character.lastName}
+          age={character.age}
+          gender={character.gender}
+        />
+      );
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Header />
+        { this.displayCharacters() }
+        <Footer />
+      </div>
+    );
+  }
+}
+```
+
+Instead, pass in the list and move the function out of the class
+
+```javascript
+export const displayCharacters = (characters) => {
+  return characters.map(character => {
+    return (
+      <Character
+        firstName={character.firstName}
+        lastName={character.lastName}
+        age={character.age}
+        gender={character.gender}
+      />
+    );
+  });
+}
+
+class CharacterSelector extends React.Component {
+  render() {
+    return (
+      <div>
+        <Header />
+        { displayCharacters(this.props.characters) }
+        <Footer />
+      </div>
+    );
+  }
+}
+```
+
+Pros
+ - Easier to understand
+ - Easier to test
+ - Function is re-usable
