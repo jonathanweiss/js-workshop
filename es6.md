@@ -273,11 +273,11 @@ validateUser({
 ```javascript
 const getInsuranceType = patientId => 'premium';
 
-const generatePatientInfo = ({ firstName, id, dateOfBirth }) => (
+const generatePatientInfo = (firstName, id, dateOfBirth) => ({
   firstName,
   insuranceType: getInsuranceType(id),
   age: moment().year() - moment(dateOfBirth).year(),
-);
+});
 
 const validatePatient = patient => (
   patient.firstName &&
@@ -313,7 +313,7 @@ class PatientList {
     this.patients = [];
   }
 
-  addPatient({ firstName, id, dateOfBirth }) {
+  addPatient(firstName, id, dateOfBirth) {
     this.patients.push({
       firstName,
       insuranceType: getInsuranceType(id),
@@ -343,7 +343,10 @@ class PatientList {
   }
 }
 ```
+(Note that we've changed the parameters in `addPatient` to accept a single object.)
+
 Pros
+
  - Easier to understand
  - Easier to test
  - Function is re-usable 

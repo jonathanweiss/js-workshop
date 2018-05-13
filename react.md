@@ -56,7 +56,7 @@ class PatientList extends React.Component {
     };
   }
 
-  addPatient({ firstName, id, dateOfBirth }) {
+  addPatient(firstName, id, dateOfBirth) {
     const patients = this.state.patients;
     patients.push({
       firstName,
@@ -80,7 +80,7 @@ class PatientList extends React.Component {
     };
   }
 
-  addPatient({ firstName, id, dateOfBirth }) {
+  addPatient(firstName, id, dateOfBirth) {
     this.setState({
       patients: [
         ...this.state.patients,
