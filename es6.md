@@ -237,6 +237,47 @@ const [
 );
 ```
 
+### Prefer lookups over the `switch` statement
+
+Instead of this
+
+```javascript
+const getLabel = (tabKey) => {
+  let label;
+  switch (tabKey) {
+    case 'about':
+      label = 'About Springfield';
+      break;
+    case 'news':
+      label = 'Channel 6 weekday news';
+      break;
+    case 'shopping':
+      label = 'Kwik-E-Mart';
+      break;
+    default:
+      label = 'Home';
+  }
+  return label;
+};
+```
+
+Use an object and lookup the value for the desired key:
+
+```javascript
+const tabContent = {
+  about: 'About Springfield',
+  news: 'Channel 6 weekday news',
+  shopping: 'Kwik-E-Mart',
+};
+
+const label = tabContent[tabKey] || 'Home';
+```
+
+Pros
+ - Less code
+ - Objects are _dynamic_, while `switch` is hard-coded
+
+
 ### Use plain objects
 
 It's ok create and pass around plain objects. Only use generator functions when you have some logic in them.
@@ -349,7 +390,7 @@ Pros
 
  - Easier to understand
  - Easier to test
- - Function is re-usable 
+ - Function is re-usable
  - Bonus: we've removed the dependencies (`moment()` and `getInsuranceType()`) from `PatientList`.
 
 ### Prefer pure functions 2
